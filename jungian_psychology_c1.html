@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jungian Psychology & the Analytical Tradition — C1 English</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a1a2e;
+    --gold: #d4860e;
+    --beige: #f5f1e8;
+    --cream: #faf8f3;
+    --gold-light: #f5e6d3;
+    --dark-text: #2b2b2b;
+    --mint: #e8f5e9;
+    --mint-border: #4caf50;
+    --purple-light: #f3e8ff;
+    --purple-border: #7c3aed;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--beige);
+    color: var(--dark-text);
+    line-height: 1.65;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at top left, rgba(212,134,14,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(124,58,237,0.05) 0%, transparent 50%);
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 30px 22px 80px; }
+
+  header {
+    background: var(--cream); border: 2px solid var(--navy);
+    border-radius: 18px; padding: 34px 38px; margin-bottom: 28px;
+    position: relative; box-shadow: 6px 6px 0 var(--navy); overflow: hidden;
+  }
+  header::before {
+    content: "🧠"; position: absolute; top: 26px; right: 32px;
+    font-size: 108px; opacity: 0.11; z-index: 0;
+  }
+  .header-content { position: relative; z-index: 1; }
+  .badge-label {
+    display: inline-block; font-family: 'Courier Prime', monospace;
+    font-size: 11px; letter-spacing: 3px;
+    background: var(--navy); color: var(--gold);
+    padding: 5px 12px; border-radius: 4px; margin-bottom: 14px;
+  }
+  h1 { font-family: 'DM Serif Display', serif; font-size: clamp(32px, 5vw, 52px); line-height: 1.07; color: var(--navy); letter-spacing: -1px; }
+  h1 .accent { color: var(--gold); font-style: italic; }
+  .sub { font-size: 17px; color: #4a4a4a; margin-top: 10px; max-width: 680px; }
+  .tags { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag { font-family: 'Courier Prime', monospace; font-size: 11px; padding: 4px 10px; background: var(--gold-light); border: 1.5px solid var(--navy); border-radius: 20px; letter-spacing: 1px; color: var(--navy); }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .tab { padding: 12px 15px; background: var(--cream); border: 2px solid var(--navy); font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px; cursor: pointer; color: var(--navy); border-radius: 10px; box-shadow: 3px 3px 0 var(--navy); transition: all 0.15s; }
+  .tab:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--navy); }
+  .tab.active { background: var(--navy); color: var(--gold); }
+
+  .panel { display: none; animation: fadeIn 0.3s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)} }
+
+  .section-title { font-family: 'DM Serif Display', serif; font-size: 30px; margin-bottom: 8px; color: var(--navy); }
+  .section-title .emoji { margin-right: 10px; }
+  .instr { color: #4a4a4a; margin-bottom: 22px; font-size: 15px; padding: 10px 14px; background: var(--gold-light); border-left: 4px solid var(--gold); border-radius: 0 8px 8px 0; }
+
+  /* WORD BANK */
+  .word-bank { background: var(--mint); border: 2px solid var(--mint-border); border-radius: 12px; padding: 14px 18px; margin-bottom: 22px; }
+  .word-bank-label { font-family: 'Courier Prime', monospace; font-size: 11px; letter-spacing: 2px; color: var(--mint-border); font-weight: 700; margin-bottom: 8px; display: block; }
+  .word-bank-words { display: flex; flex-wrap: wrap; gap: 8px; }
+  .wb-word { background: var(--cream); border: 1.5px solid var(--mint-border); border-radius: 6px; padding: 4px 10px; font-family: 'Courier Prime', monospace; font-size: 13px; color: var(--navy); }
+
+  /* READING */
+  .reading { background: var(--cream); border: 2px solid var(--navy); border-radius: 16px; padding: 32px 36px; box-shadow: 6px 6px 0 var(--navy); margin-bottom: 24px; }
+  .reading h3 { font-family: 'DM Serif Display', serif; font-size: 27px; margin-bottom: 6px; line-height: 1.2; color: var(--navy); }
+  .reading .byline { font-family: 'Courier Prime', monospace; font-size: 12px; color: var(--gold); margin-bottom: 16px; }
+  .reading p { margin-bottom: 14px; line-height: 1.75; font-size: 15.5px; }
+  .reading strong { color: var(--gold); font-weight: 700; }
+
+  /* VOCAB */
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 12px; margin-top: 18px; }
+  .vocab-card { background: var(--cream); border: 2px solid var(--navy); border-radius: 12px; padding: 18px; box-shadow: 4px 4px 0 var(--navy); }
+  .vocab-card .word { font-family: 'DM Serif Display', serif; font-size: 17px; color: var(--gold); margin-bottom: 4px; }
+  .vocab-card .pos { font-family: 'Courier Prime', monospace; font-size: 11px; color: #888; letter-spacing: 1px; margin-bottom: 5px; }
+  .vocab-card .def { font-size: 13px; color: #4a4a4a; line-height: 1.5; margin-bottom: 9px; }
+  .vocab-card code { display: block; background: var(--gold-light); padding: 7px; border-radius: 6px; font-family: 'Courier Prime', monospace; font-size: 12px; color: var(--navy); border-left: 3px solid var(--gold); }
+
+  /* COLLOCATIONS */
+  .grammar-box { background: var(--gold-light); border: 2px solid var(--gold); border-radius: 12px; padding: 18px 22px; margin-bottom: 22px; }
+  .grammar-box h4 { font-family: 'DM Serif Display', serif; font-size: 17px; color: var(--navy); margin-bottom: 10px; }
+  .grammar-box ul { margin-left: 20px; }
+  .grammar-box li { margin-bottom: 9px; line-height: 1.6; color: var(--navy); font-size: 14.5px; }
+  .grammar-box code { background: var(--cream); padding: 2px 6px; border-radius: 4px; font-family: 'Courier Prime', monospace; font-size: 12px; color: var(--navy); }
+
+  /* PRAGMATIC BOX */
+  .pragmatic-box { background: var(--purple-light); border: 2px solid var(--purple-border); border-radius: 12px; padding: 18px 22px; margin-bottom: 22px; }
+  .pragmatic-box h4 { font-family: 'DM Serif Display', serif; font-size: 17px; color: var(--navy); margin-bottom: 10px; }
+  .pragmatic-box ul { margin-left: 20px; }
+  .pragmatic-box li { margin-bottom: 9px; line-height: 1.6; color: var(--navy); font-size: 14.5px; }
+  .pragmatic-box code { background: var(--cream); padding: 2px 6px; border-radius: 4px; font-family: 'Courier Prime', monospace; font-size: 12px; color: var(--navy); }
+
+  /* SPEAKING CARDS — 20 GRID */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .speak-card {
+    background: var(--cream);
+    border: 2px solid var(--navy);
+    border-radius: 14px;
+    padding: 20px 22px;
+    box-shadow: 4px 4px 0 var(--navy);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .speak-card-num {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .speak-card-theme {
+    font-family: 'Courier Prime', monospace;
+    font-size: 10.5px;
+    letter-spacing: 1.5px;
+    color: #888;
+    text-transform: uppercase;
+  }
+  .speak-card-q {
+    font-family: 'DM Serif Display', serif;
+    font-size: 16.5px;
+    line-height: 1.45;
+    color: var(--navy);
+  }
+  .speak-card-prompts {
+    background: var(--gold-light);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 6px 6px 0;
+    padding: 8px 12px;
+    font-size: 12.5px;
+    color: #4a4a4a;
+    line-height: 1.6;
+  }
+  .speak-card-prompts span {
+    display: inline-block;
+    background: var(--cream);
+    border: 1px solid var(--navy);
+    border-radius: 10px;
+    padding: 2px 7px;
+    margin: 2px 2px;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--navy);
+  }
+
+  /* MATCHING */
+  .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+  .match-col { display: flex; flex-direction: column; gap: 9px; }
+  .match-item { background: var(--cream); border: 2px solid var(--navy); padding: 11px 14px; border-radius: 10px; cursor: pointer; transition: all 0.2s; box-shadow: 3px 3px 0 var(--navy); font-family: 'Inter', sans-serif; color: var(--navy); font-size: 14px; }
+  .match-item:hover { transform: translate(-2px,-2px); box-shadow: 4px 4px 0 var(--navy); }
+  .match-item.selected { background: var(--gold-light); border-color: var(--gold); font-weight: 600; }
+  .match-item.matched { background: #e8f5e9; color: #2e7d32; border-color: #4caf50; cursor: default; }
+  .match-item.wrong { animation: shake 0.3s; }
+  @keyframes shake { 0%,100%{transform:translate(0)} 25%{transform:translate(-4px)} 75%{transform:translate(4px)} }
+
+  /* FILL */
+  .fill-item { margin-bottom: 18px; }
+  .fill-item p { font-size: 15px; line-height: 1.75; color: var(--navy); }
+  .fill-input { border: none; border-bottom: 2px solid var(--navy); padding: 4px 6px; font-family: 'Courier Prime', monospace; background: transparent; min-width: 150px; color: var(--navy); font-size: 14px; }
+  .fill-input.correct { border-bottom-color: #4caf50; background: #e8f5e9; color: #2e7d32; }
+  .fill-input.wrong { border-bottom-color: #c62828; background: #ffcdd2; color: var(--navy); }
+  .num { font-family: 'Courier Prime', monospace; font-weight: 700; color: var(--gold); margin-right: 8px; font-size: 14px; }
+
+  /* MC */
+  .mc-item { margin-bottom: 20px; }
+  .mc-q { font-weight: 600; margin-bottom: 10px; font-size: 15px; color: var(--navy); line-height: 1.5; }
+  .mc-options { display: flex; flex-direction: column; gap: 9px; }
+  .mc-opt { background: var(--cream); border: 2px solid var(--navy); padding: 11px 14px; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 14px; cursor: pointer; text-align: left; transition: all 0.2s; box-shadow: 3px 3px 0 var(--navy); color: var(--navy); }
+  .mc-opt:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--navy); }
+  .mc-opt:disabled { cursor: default; }
+  .mc-opt.correct { background: var(--gold-light); border-color: var(--gold); color: var(--gold); font-weight: 600; box-shadow: 3px 3px 0 var(--gold); }
+  .mc-opt.wrong { background: #ffcdd2; border-color: #c62828; }
+
+  /* BUTTONS */
+  .check-btn { background: var(--navy); color: var(--cream); border: 2px solid var(--navy); padding: 12px 24px; font-weight: 600; font-size: 14px; border-radius: 10px; cursor: pointer; box-shadow: 4px 4px 0 var(--navy); transition: all 0.2s; margin-right: 16px; margin-top: 8px; }
+  .check-btn:hover { transform: translate(-1px,-1px); box-shadow: 5px 5px 0 var(--navy); }
+  .score { font-family: 'Courier Prime', monospace; font-weight: 700; color: var(--gold); font-size: 14px; }
+
+  footer { text-align: center; margin-top: 60px; padding-top: 20px; border-top: 2px solid var(--navy); font-family: 'Courier Prime', monospace; font-size: 12px; color: #4a4a4a; letter-spacing: 2px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="header-content">
+      <span class="badge-label">LEVEL C1 · PROFESSIONAL ENGLISH</span>
+      <h1>Jungian Psychology &<br><span class="accent">The Analytical Tradition</span></h1>
+      <p class="sub">Depth psychology, the unconscious, archetypes, individuation, the shadow — exploring the language of the psyche and how to discuss these concepts with sophistication, precision, and fluency in English.</p>
+      <div class="tags">
+        <span class="tag">#DEPTH-PSYCHOLOGY</span>
+        <span class="tag">#ANALYTICAL-TRADITION</span>
+        <span class="tag">#PRAGMATIC-LANGUAGE</span>
+        <span class="tag">#ACADEMIC-COLLOCATIONS</span>
+        <span class="tag">#DISCUSSION-CARDS</span>
+        <span class="tag">#C1-PROFESSIONAL</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="t1">1. Reading</button>
+    <button class="tab" data-tab="t2">2. Vocabulary</button>
+    <button class="tab" data-tab="t3">3. Collocations</button>
+    <button class="tab" data-tab="t4">4. Pragmatic Language</button>
+    <button class="tab" data-tab="t5">5. Matching</button>
+    <button class="tab" data-tab="t6">6. Fill</button>
+    <button class="tab" data-tab="t7">7. Multiple Choice</button>
+    <button class="tab" data-tab="t8">8–10. Discussion Cards</button>
+  </div>
+
+  <!-- TAB 1: READING -->
+  <section class="panel active" id="t1">
+    <h2 class="section-title"><span class="emoji">📖</span>Reading</h2>
+    <p class="instr">Read this analytical essay on the contemporary relevance of Jungian psychology. Note the vocabulary, register, and argumentative moves as you read.</p>
+
+    <div class="reading">
+      <h3>The Wound That Illuminates: Jung's Psychology in the 21st Century</h3>
+      <p class="byline">Dr. Irena Wolff · Journal of Analytical Psychology & Contemporary Practice · 2025</p>
+
+      <p>There is a peculiar irony in the fact that Carl Jung — who spent his life <strong>plumbing the depths</strong> of the unconscious, insisting that what we refuse to see in ourselves will eventually <strong>present itself</strong> in more disruptive forms — has become one of the most cited thinkers in an era characterised by collective psychological denial. In a culture that rewards performance over interiority, Jung's insistence that <strong>the unexamined shadow</strong> does not dissolve but merely <strong>migrates</strong> — into projections, into political rage, into bodily symptoms — feels less like a theoretical claim and more like a diagnosis.</p>
+
+      <p>At the heart of analytical psychology lies the concept of <strong>individuation</strong>: the lifelong process by which a person moves toward psychological wholeness, integrating <strong>the rejected and unconscious</strong> aspects of the self rather than disowning them. This is not a comfortable process. Jung was emphatic that genuine self-knowledge demands <strong>a confrontation with the shadow</strong> — those qualities we have repressed, projected onto others, or denied entirely. The shadow, Jung argued, is not merely the repository of what is morally objectionable; it is also the seat of <strong>unrealised potential</strong>, the unborn life. <strong>What we cast out</strong> as unacceptable often contains the raw material of our most authentic creativity.</p>
+
+      <p>Equally foundational is Jung's theory of the <strong>collective unconscious</strong> — a stratum of the psyche that transcends individual biography and contains the inherited psychological patterns he termed <strong>archetypes</strong>. Unlike personal complexes, archetypes are not acquired through experience; they are <strong>a priori</strong> structures — pre-formed tendencies that <strong>organise psychic energy</strong> and manifest across cultures in the recurring figures of myth, dream, and religion: the Great Mother, the Trickster, the Hero, the Wise Old Man. The universality of these patterns, Jung contended, suggests a <strong>phylogenetic inheritance</strong> of the psyche — a shared inner world beneath the surface of individual difference.</p>
+
+      <p>Contemporary neuroscience has begun to lend unexpected support to Jungian hypotheses. A 2025 paper in <em>Neuroscience of Consciousness</em> proposed that archetypal patterns may correspond to <strong>deep cortical eigenmodes</strong> — fundamental resonance patterns in the brain's structural connectivity, consistent across individuals. Whether or not this mapping holds empirically, it raises a compelling possibility: that what Jung intuited through <strong>phenomenological observation</strong> and dream analysis may have a neurological substrate. The <strong>chasm between depth psychology and neuroscience</strong> is narrowing — and the implications for the future of psychoanalytic practice are profound.</p>
+    </div>
+
+    <p class="instr"><strong>Analytical comprehension questions — answer in depth:</strong></p>
+    <div class="fill-item"><p><span class="num">01</span>What does the author mean by describing Jung's theories as "a diagnosis" rather than "a theoretical claim"?</p></div>
+    <div class="fill-item"><p><span class="num">02</span>Why does the author say the shadow contains "unrealised potential" and "the unborn life"? What implications does this have for clinical practice?</p></div>
+    <div class="fill-item"><p><span class="num">03</span>How does the 2025 neuroscience finding change or complicate the relationship between depth psychology and empirical science?</p></div>
+  </section>
+
+  <!-- TAB 2: VOCABULARY -->
+  <section class="panel" id="t2">
+    <h2 class="section-title"><span class="emoji">📚</span>Vocabulary</h2>
+    <p class="instr">Expand your lexical range in English with these sophisticated terms from Jungian and analytical psychology. Study the part of speech, definition, and usage carefully.</p>
+    <div class="vocab-grid">
+      <div class="vocab-card">
+        <div class="word">individuation</div>
+        <div class="pos">NOUN · UNCOUNTABLE</div>
+        <div class="def">The lifelong Jungian process of integrating unconscious material to achieve psychological wholeness.</div>
+        <code>Individuation is not a destination but an ongoing negotiation between consciousness and the unconscious.</code>
+      </div>
+      <div class="vocab-card">
+        <div class="word">the shadow</div>
+        <div class="pos">NOUN · JUNGIAN CONSTRUCT</div>
+        <div class="def">The unconscious repository of repressed, disowned, or unacknowledged aspects of the personality.</div>
+        <code>Failure to integrate the shadow results in projection — attributing to others what we cannot face in ourselves.</code>
+      </div>
+      <div class="vocab-card">
+        <div class="word">archetype</div>
+        <div class="pos">NOUN · COUNTABLE</div>
+        <div class="def">An inherited, universal pattern of the collective unconscious that organises psychic experience.</div>
+        <code>The Mother archetype manifests across cultures in forms ranging from the nurturing to the devouring.</code>
+      </div>
+      <div class="vocab-card">
+        <div class="word">collective unconscious</div>
+        <div class="pos">NOUN PHRASE</div>
+        <div class="def">A transpersonal layer of the psyche shared by all humans, containing inherited archetypal patterns.</div>
+        <code>The collective unconscious distinguishes Jungian theory from Freudian psychology most fundamentally.</code>
+      </div>
+      <div class="vocab-card">
+        <div class="word">projection</div>
+        <div class="pos">NOUN · COUNTABLE/UNCOUNTABLE</div>
+        <div class="def">Attributing one's own unconscious qualities — particularly shadow material — onto another person.</div>
+        <code>Projection is often identified by the intensity of the emotional reaction it generates in the perceiver.</code>
+      </div>
+      <div class="vocab-card">
+        <div class="word">psychic energy</div>
+        <div class="pos">NOUN PHRASE</div>
+        <div class="def">The libidinal force — not merely sexual — that animates and drives the psychic apparatus in Jungian theory.</div>
+        <code>Repression consumes psychic energy that could otherwise fuel creative or relational activity.</code>
+      </div>
+      <div class="vocab-card">
+        <div class="word">active imagination</div>
+        <div class="pos">NOUN PHRASE</div>
+        <div class="def">A Jungian technique involving conscious engagement with unconscious images through dialogue or creative expression.</div>
+        <code>Active imagination allows the analysand to encounter the autonomous figures of the unconscious directly.</code>
+      </div>
+      <div class="vocab-card">
+        <div class="word">anima / animus</div>
+        <div class="pos">NOUN · JUNGIAN CONSTRUCT</div>
+        <div class="def">The contrasexual unconscious dimension: anima (feminine in men), animus (masculine in women).</div>
+        <code>The animus can manifest as an inner critic — an internal voice that undermines the woman's authority.</code>
+      </div>
+      <div class="vocab-card">
+        <div class="word">complexes</div>
+        <div class="pos">NOUN · PLURAL</div>
+        <div class="def">Clusters of emotionally charged unconscious content organised around a nuclear image or theme.</div>
+        <code>Complexes are identified clinically by their autonomous nature — they seem to possess the ego rather than serve it.</code>
+      </div>
+      <div class="vocab-card">
+        <div class="word">phenomenological</div>
+        <div class="pos">ADJECTIVE</div>
+        <div class="def">Relating to the direct description of lived, subjective experience without theoretical presupposition.</div>
+        <code>Jung's approach was phenomenological — he followed the psyche's own language rather than imposing theory onto it.</code>
+      </div>
+      <div class="vocab-card">
+        <div class="word">transcendent function</div>
+        <div class="pos">NOUN PHRASE · JUNGIAN</div>
+        <div class="def">The psychic capacity to hold opposites in tension until a third, integrating possibility emerges.</div>
+        <code>The transcendent function operates at the threshold between conscious and unconscious material.</code>
+      </div>
+      <div class="vocab-card">
+        <div class="word">the analysand</div>
+        <div class="pos">NOUN · COUNTABLE</div>
+        <div class="def">The person undergoing psychoanalysis — the patient in the analytic relationship.</div>
+        <code>The analyst must attend as carefully to their own countertransference as to the analysand's material.</code>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 3: COLLOCATIONS -->
+  <section class="panel" id="t3">
+    <h2 class="section-title"><span class="emoji">🎯</span>Collocations & Academic Language</h2>
+    <p class="instr">These collocations are essential for discussing Jungian psychology precisely and fluently in English.</p>
+
+    <div class="grammar-box">
+      <h4>🧠 The unconscious</h4>
+      <ul>
+        <li><strong>plumb the depths of</strong> = to explore something very thoroughly and deeply. <code>Jungian analysis plumbs the depths of the unconscious through dream work and active imagination.</code></li>
+        <li><strong>access / tap into the unconscious</strong> = to reach or make contact with unconscious material. <code>Active imagination is a technique used to access the unconscious directly.</code></li>
+        <li><strong>emerge from the unconscious</strong> = to come into conscious awareness from below. <code>Archetypal images that emerge from the unconscious often appear in dreams as luminous figures.</code></li>
+        <li><strong>bring unconscious material to consciousness</strong> = to make the hidden visible and workable. <code>The therapeutic aim is to bring unconscious material to consciousness without overwhelming the ego.</code></li>
+      </ul>
+    </div>
+
+    <div class="grammar-box">
+      <h4>🌑 The shadow and projection</h4>
+      <ul>
+        <li><strong>confront the shadow</strong> = to face and examine one's repressed or denied material. <code>Individuation cannot proceed without a genuine willingness to confront the shadow.</code></li>
+        <li><strong>integrate shadow material</strong> = to acknowledge and assimilate rejected aspects of the self. <code>Integrating shadow material does not mean acting it out — it means owning it consciously.</code></li>
+        <li><strong>project onto another</strong> = to attribute one's own qualities unconsciously to someone else. <code>The intensity with which we despise someone often reflects what we project onto them.</code></li>
+        <li><strong>withdraw a projection</strong> = to recall and own what was previously attributed to another. <code>Withdrawing a projection is often more disturbing than making it — it requires radical self-responsibility.</code></li>
+      </ul>
+    </div>
+
+    <div class="grammar-box">
+      <h4>⚡ Psychic energy and the Self</h4>
+      <ul>
+        <li><strong>organise psychic energy</strong> = to channel or direct the libidinal force of the psyche. <code>Archetypes organise psychic energy around universal human themes — birth, death, transformation.</code></li>
+        <li><strong>the tension of opposites</strong> = the dynamic conflict between contradictory psychic forces. <code>Jung believed that holding the tension of opposites, rather than resolving it prematurely, generates the transcendent function.</code></li>
+        <li><strong>individuation process</strong> = the developmental movement toward psychological wholeness. <code>The individuation process is not a linear progression but a spiralling deepening.</code></li>
+        <li><strong>encounter the Self</strong> = to come into relationship with the central ordering archetype of the psyche. <code>Encounters with the Self often arise in numinous dreams or overwhelming life events.</code></li>
+      </ul>
+    </div>
+
+    <div class="grammar-box">
+      <h4>🗣️ Clinical and analytical language</h4>
+      <ul>
+        <li><strong>hold the analytic space</strong> = to maintain the therapeutic container with consistent boundaries. <code>The analyst's task is to hold the analytic space with sufficient steadiness to allow regression.</code></li>
+        <li><strong>work through</strong> = to process and metabolise painful psychological material over time. <code>Some complexes take years to work through — the psyche moves at its own pace.</code></li>
+        <li><strong>attend to the transference</strong> = to observe and interpret the patient's unconscious relational patterns. <code>Failing to attend to the transference risks colluding with the patient's defences.</code></li>
+        <li><strong>tolerate ambiguity</strong> = to remain with uncertainty without forcing premature closure. <code>Analytic work demands the capacity to tolerate ambiguity — not everything resolves.</code></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- TAB 4: PRAGMATIC LANGUAGE -->
+  <section class="panel" id="t4">
+    <h2 class="section-title"><span class="emoji">💬</span>Pragmatic & Academic Language</h2>
+    <p class="instr">C1 speakers use sophisticated pragmatic strategies to nuance, qualify, challenge, and expand ideas. These structures are essential in professional and academic discussions of psychology.</p>
+
+    <div class="pragmatic-box">
+      <h4>🔍 Hedging and qualifying claims</h4>
+      <ul>
+        <li><strong>It could be argued that...</strong> — cautious claim. <code>It could be argued that individuation, as Jung conceived it, is a fundamentally privileged undertaking.</code></li>
+        <li><strong>There is a case to be made for...</strong> — supporting a position carefully. <code>There is a case to be made for treating the shadow not as pathology but as invitation.</code></li>
+        <li><strong>This is not without its critics — ...</strong> — acknowledging disagreement. <code>Active imagination is not without its critics — some argue it risks psychotic decompensation in vulnerable analysands.</code></li>
+        <li><strong>One might contend that...</strong> — distanced position-taking. <code>One might contend that the collective unconscious is more metaphor than mechanism.</code></li>
+      </ul>
+    </div>
+
+    <div class="pragmatic-box">
+      <h4>🔄 Challenging and nuancing</h4>
+      <ul>
+        <li><strong>I would take issue with the notion that...</strong> — polite disagreement. <code>I would take issue with the notion that archetypes are purely biological — culture shapes their expression profoundly.</code></li>
+        <li><strong>What strikes me here is...</strong> — drawing attention analytically. <code>What strikes me here is the tension between Jung's universalism and his cultural particularity.</code></li>
+        <li><strong>This raises the question of whether...</strong> — opening inquiry. <code>This raises the question of whether the individuation process can genuinely occur outside a sustained analytic relationship.</code></li>
+        <li><strong>The distinction worth drawing is between X and Y...</strong> — clarifying. <code>The distinction worth drawing is between the personal shadow and the collective shadow of an institution.</code></li>
+      </ul>
+    </div>
+
+    <div class="pragmatic-box">
+      <h4>🌉 Connecting and expanding ideas</h4>
+      <ul>
+        <li><strong>This resonates with...</strong> — finding parallels. <code>This resonates with Winnicott's concept of the false self — both describe the cost of inauthenticity.</code></li>
+        <li><strong>To push this further...</strong> — deepening the argument. <code>To push this further — if shadow integration is essential, then clinical training must include the analyst's own shadow work.</code></li>
+        <li><strong>What this suggests is that...</strong> — drawing implication. <code>What this suggests is that the analytic relationship is itself a form of individuation — for both parties.</code></li>
+        <li><strong>In my clinical experience...</strong> — grounding in practice. <code>In my clinical experience, projection withdrawal rarely occurs through insight alone — it requires relational repair.</code></li>
+      </ul>
+    </div>
+
+    <div class="pragmatic-box">
+      <h4>🎭 Dramatic and emphatic language</h4>
+      <ul>
+        <li><strong>What is at stake here is nothing less than...</strong> <code>What is at stake here is nothing less than the patient's capacity to inhabit their own life.</code></li>
+        <li><strong>The implications of this are profound...</strong> <code>The implications of this for clinical practice are profound — they reframe the analyst's role entirely.</code></li>
+        <li><strong>It is precisely this tension that...</strong> <code>It is precisely this tension between conscious will and unconscious necessity that drives the analytic process.</code></li>
+        <li><strong>One cannot overstate the significance of...</strong> <code>One cannot overstate the significance of the first encounter with the shadow in a patient's analysis.</code></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- TAB 5: MATCHING -->
+  <section class="panel" id="t5">
+    <h2 class="section-title"><span class="emoji">🔗</span>Matching Exercise</h2>
+    <p class="instr">Match each Jungian concept on the left with its precise definition. Click a term, then click its match.</p>
+    <div class="match-grid">
+      <div class="match-col">
+        <span class="match-item" data-word="indiv">Individuation</span>
+        <span class="match-item" data-word="shadow">The Shadow</span>
+        <span class="match-item" data-word="archetype">Archetype</span>
+        <span class="match-item" data-word="cu">Collective unconscious</span>
+        <span class="match-item" data-word="projection">Projection</span>
+        <span class="match-item" data-word="ai-tech">Active imagination</span>
+        <span class="match-item" data-word="anima">Anima / Animus</span>
+        <span class="match-item" data-word="complex">Complex</span>
+        <span class="match-item" data-word="tf">Transcendent function</span>
+        <span class="match-item" data-word="analysand">The Analysand</span>
+      </div>
+      <div class="match-col">
+        <span class="match-item" data-def="shadow">The repository of repressed, disowned, and unacknowledged aspects of the personality</span>
+        <span class="match-item" data-def="indiv">The lifelong process of moving toward psychological wholeness through integration of the unconscious</span>
+        <span class="match-item" data-def="cu">The transpersonal layer of the psyche shared by all humans containing inherited patterns</span>
+        <span class="match-item" data-def="archetype">A universal, inherited pattern of the collective unconscious that organises psychic experience</span>
+        <span class="match-item" data-def="ai-tech">A technique involving conscious dialogue with unconscious images through creative engagement</span>
+        <span class="match-item" data-def="projection">Unconsciously attributing one's own qualities, especially shadow material, onto another person</span>
+        <span class="match-item" data-def="tf">The psychic capacity to hold opposites in tension until a third integrating possibility emerges</span>
+        <span class="match-item" data-def="anima">The contrasexual unconscious dimension — feminine in men's psyche, masculine in women's</span>
+        <span class="match-item" data-def="analysand">The person undergoing psychoanalysis; the patient in the analytic relationship</span>
+        <span class="match-item" data-def="complex">An autonomous cluster of emotionally charged unconscious content organised around a central theme</span>
+      </div>
+    </div>
+    <span class="score" id="score5">— / 10</span>
+  </section>
+
+  <!-- TAB 6: FILL -->
+  <section class="panel" id="t6">
+    <h2 class="section-title"><span class="emoji">✏️</span>Fill in the Blanks</h2>
+    <p class="instr">Use the exact word or phrase from the Word Bank to complete each sentence. Pay attention to grammatical form.</p>
+
+    <div class="word-bank">
+      <span class="word-bank-label">📖 WORD BANK</span>
+      <div class="word-bank-words">
+        <span class="wb-word">individuation</span>
+        <span class="wb-word">projection</span>
+        <span class="wb-word">plumbing the depths</span>
+        <span class="wb-word">confront the shadow</span>
+        <span class="wb-word">collective unconscious</span>
+        <span class="wb-word">archetypes</span>
+        <span class="wb-word">psychic energy</span>
+        <span class="wb-word">active imagination</span>
+        <span class="wb-word">transcendent function</span>
+        <span class="wb-word">phenomenological</span>
+      </div>
+    </div>
+
+    <div class="fill-item">
+      <p><span class="num">01</span>Jung spent his life <input class="fill-input" data-answer="plumbing the depths">, of the unconscious, mapping what he found there with extraordinary precision.</p>
+    </div>
+    <div class="fill-item">
+      <p><span class="num">02</span>The process of <input class="fill-input" data-answer="individuation">, cannot begin in earnest until the ego is willing to acknowledge the existence of the shadow.</p>
+    </div>
+    <div class="fill-item">
+      <p><span class="num">03</span>The <input class="fill-input" data-answer="collective unconscious">, is populated by <input class="fill-input" data-answer="archetypes">, — primordial patterns that organise human experience across all cultures.</p>
+    </div>
+    <div class="fill-item">
+      <p><span class="num">04</span>To <input class="fill-input" data-answer="confront the shadow">, requires extraordinary courage; many choose lifelong projection over this encounter.</p>
+    </div>
+    <div class="fill-item">
+      <p><span class="num">05</span><input class="fill-input" data-answer="projection">, is most visible in the disproportionate emotional reactions we have toward others.</p>
+    </div>
+    <div class="fill-item">
+      <p><span class="num">06</span>Jung's approach was fundamentally <input class="fill-input" data-answer="phenomenological">, — he allowed the psyche to speak in its own symbols rather than forcing it into theoretical categories.</p>
+    </div>
+    <div class="fill-item">
+      <p><span class="num">07</span>Repression does not neutralise <input class="fill-input" data-answer="psychic energy">, — it merely redirects it into symptomatic or compensatory channels.</p>
+    </div>
+    <div class="fill-item">
+      <p><span class="num">08</span><input class="fill-input" data-answer="active imagination">, requires the ego to engage with unconscious figures as autonomous interlocutors rather than dismissing them.</p>
+    </div>
+    <div class="fill-item">
+      <p><span class="num">09</span>The <input class="fill-input" data-answer="transcendent function">, does not eliminate conflict — it transforms it into a dialectic that the psyche can metabolise and grow through.</p>
+    </div>
+
+    <button class="check-btn" onclick="checkFill()">✓ Check Answers</button>
+    <span class="score" id="score6">— / 10</span>
+  </section>
+
+  <!-- TAB 7: MULTIPLE CHOICE -->
+  <section class="panel" id="t7">
+    <h2 class="section-title"><span class="emoji">❓</span>Multiple Choice</h2>
+    <p class="instr">Choose the best answer for each conceptual and language question.</p>
+
+    <div class="mc-item" data-correct="b">
+      <div class="mc-q"><span class="num">Q01</span>What does the author mean by saying the shadow "migrates" rather than dissolves?</div>
+      <div class="mc-options">
+        <button class="mc-opt">a) The shadow moves from one patient to another during group therapy</button>
+        <button class="mc-opt">b) Repressed material does not disappear — it reappears in other forms such as projections or bodily symptoms</button>
+        <button class="mc-opt">c) The shadow archetype changes its form during the individuation process</button>
+        <button class="mc-opt">d) Unconscious material migrates from the personal to the collective layer</button>
+      </div>
+    </div>
+
+    <div class="mc-item" data-correct="c">
+      <div class="mc-q"><span class="num">Q02</span>The text states the shadow contains "unrealised potential." What does this imply for clinical work?</div>
+      <div class="mc-options">
+        <button class="mc-opt">a) Shadow work should focus exclusively on positive qualities in the patient</button>
+        <button class="mc-opt">b) The shadow should not be analysed — only accepted</button>
+        <button class="mc-opt">c) Integration of disowned material may release creative and relational capacities that repression has blocked</button>
+        <button class="mc-opt">d) Shadow material is always positive once examined</button>
+      </div>
+    </div>
+
+    <div class="mc-item" data-correct="a">
+      <div class="mc-q"><span class="num">Q03</span>What does "a priori" mean in the context of archetypes?</div>
+      <div class="mc-options">
+        <button class="mc-opt">a) Pre-existing and not derived from personal experience — present before learning</button>
+        <button class="mc-opt">b) Acquired through repeated childhood experience</button>
+        <button class="mc-opt">c) Logically derived from observation of patients</button>
+        <button class="mc-opt">d) Discovered in later life through analysis</button>
+      </div>
+    </div>
+
+    <div class="mc-item" data-correct="d">
+      <div class="mc-q"><span class="num">Q04</span>What does "phylogenetic inheritance" of the psyche mean?</div>
+      <div class="mc-options">
+        <button class="mc-opt">a) A patient inheriting their parents' psychological complexes</button>
+        <button class="mc-opt">b) The analyst passing their psychology to the analysand through countertransference</button>
+        <button class="mc-opt">c) Cultural patterns transmitted through mythology and religion</button>
+        <button class="mc-opt">d) Psychological patterns inherited from the evolutionary history of the human species</button>
+      </div>
+    </div>
+
+    <div class="mc-item" data-correct="b">
+      <div class="mc-q"><span class="num">Q05</span>Which pragmatic expression would you use to politely disagree with a colleague's clinical interpretation?</div>
+      <div class="mc-options">
+        <button class="mc-opt">a) "That is completely wrong and I disagree."</button>
+        <button class="mc-opt">b) "I would take issue with the notion that the patient's rage is purely a transference phenomenon."</button>
+        <button class="mc-opt">c) "I think you are incorrect about the shadow material."</button>
+        <button class="mc-opt">d) "Your interpretation misses the Jungian point."</button>
+      </div>
+    </div>
+
+    <div class="mc-item" data-correct="c">
+      <div class="mc-q"><span class="num">Q06</span>How does the 2025 neuroscience study complicate the relationship between depth psychology and empirical science?</div>
+      <div class="mc-options">
+        <button class="mc-opt">a) It proves definitively that archetypes are biologically determined</button>
+        <button class="mc-opt">b) It dismisses Jungian hypotheses as unscientific</button>
+        <button class="mc-opt">c) It suggests Jung's phenomenological observations may have a neurological basis — partially bridging the disciplines</button>
+        <button class="mc-opt">d) It replaces the concept of archetypes with a purely computational model</button>
+      </div>
+    </div>
+
+    <div class="mc-item" data-correct="a">
+      <div class="mc-q"><span class="num">Q07</span>What does "withdraw a projection" mean in clinical terms?</div>
+      <div class="mc-options">
+        <button class="mc-opt">a) To recognise that a quality attributed to another actually belongs to oneself</button>
+        <button class="mc-opt">b) To ask a patient to stop projecting onto the analyst</button>
+        <button class="mc-opt">c) To analyse the content of what was projected</button>
+        <button class="mc-opt">d) To remove projective identification from a session</button>
+      </div>
+    </div>
+
+    <div class="mc-item" data-correct="d">
+      <div class="mc-q"><span class="num">Q08</span>Which expression best introduces a nuanced implication in academic discussion?</div>
+      <div class="mc-options">
+        <button class="mc-opt">a) "So this means..."</button>
+        <button class="mc-opt">b) "Obviously..."</button>
+        <button class="mc-opt">c) "Basically, the point is..."</button>
+        <button class="mc-opt">d) "What this suggests is that..."</button>
+      </div>
+    </div>
+
+    <button class="check-btn" onclick="checkMC()">✓ Check MC</button>
+    <span class="score" id="score7">— / 8</span>
+  </section>
+
+  <!-- TAB 8: 20 DISCUSSION CARDS -->
+  <section class="panel" id="t8">
+    <h2 class="section-title"><span class="emoji">🃏</span>20 Discussion Cards</h2>
+    <p class="instr">These 20 cards cover the full range of Jungian and analytical themes. For each card: speak for <strong>2–3 minutes</strong>, use the suggested expressions, and draw on your own clinical experience. Cards can be used for pair discussion, solo monologue practice, or supervision role-play.</p>
+
+    <div class="cards-grid">
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 01</span>
+        <span class="speak-card-theme">THE SHADOW</span>
+        <div class="speak-card-q">Jung said "Everyone carries a shadow, and the less it is embodied in the individual's conscious life, the blacker and denser it is." How does this manifest clinically — and what happens when a patient refuses to encounter their shadow?</div>
+        <div class="speak-card-prompts"><span>confront the shadow</span><span>shadow material</span><span>projection</span><span>what is at stake here is nothing less than...</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 02</span>
+        <span class="speak-card-theme">INDIVIDUATION</span>
+        <div class="speak-card-q">Is individuation possible without sustained psychoanalytic work — or can it occur through life experience alone? What conditions are necessary for the individuation process to proceed?</div>
+        <div class="speak-card-prompts"><span>individuation process</span><span>hold the analytic space</span><span>there is a case to be made for...</span><span>in my clinical experience...</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 03</span>
+        <span class="speak-card-theme">ARCHETYPES</span>
+        <div class="speak-card-q">Critics argue that archetypes are too vague to be clinically useful. How would you defend — or complicate — the concept of archetypes as a working tool in the consulting room?</div>
+        <div class="speak-card-prompts"><span>organise psychic energy</span><span>I would take issue with the notion that...</span><span>this resonates with...</span><span>the implications are profound</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 04</span>
+        <span class="speak-card-theme">PROJECTION</span>
+        <div class="speak-card-q">How do you recognise — in yourself as an analyst — that you are projecting onto a patient? What is the clinical cost of unacknowledged analyst projection?</div>
+        <div class="speak-card-prompts"><span>withdraw a projection</span><span>attend to the transference</span><span>countertransference</span><span>what strikes me here is...</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 05</span>
+        <span class="speak-card-theme">ACTIVE IMAGINATION</span>
+        <div class="speak-card-q">Describe how you use or might use active imagination in your clinical work. What are the risks for vulnerable patients — and how do you navigate them?</div>
+        <div class="speak-card-prompts"><span>access the unconscious</span><span>autonomous figures</span><span>this is not without its critics</span><span>one cannot overstate the significance of...</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 06</span>
+        <span class="speak-card-theme">ANIMA / ANIMUS</span>
+        <div class="speak-card-q">How relevant is the anima/animus construct in 2025, given contemporary understandings of gender and sexuality? Should the concept be revised, abandoned, or reinterpreted?</div>
+        <div class="speak-card-prompts"><span>contrasexual dimension</span><span>it could be argued that...</span><span>the distinction worth drawing is...</span><span>to push this further...</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 07</span>
+        <span class="speak-card-theme">COLLECTIVE UNCONSCIOUS</span>
+        <div class="speak-card-q">Is the collective unconscious an empirical hypothesis or a mythological metaphor? Does it matter — for clinical purposes — which it is?</div>
+        <div class="speak-card-prompts"><span>phylogenetic inheritance</span><span>one might contend that...</span><span>this raises the question of whether...</span><span>phenomenological</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 08</span>
+        <span class="speak-card-theme">DREAMS</span>
+        <div class="speak-card-q">How do you work with dreams in your clinical practice? What is the difference between a Freudian and a Jungian approach to dream interpretation?</div>
+        <div class="speak-card-prompts"><span>emerge from the unconscious</span><span>bring unconscious material to consciousness</span><span>amplification</span><span>what this suggests is that...</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 09</span>
+        <span class="speak-card-theme">THE SELF</span>
+        <div class="speak-card-q">Jung distinguished between the ego and the Self. How do you explain this distinction to a patient who has no prior exposure to analytical psychology?</div>
+        <div class="speak-card-prompts"><span>encounter the Self</span><span>the tension of opposites</span><span>transcendent function</span><span>it is precisely this tension that...</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 10</span>
+        <span class="speak-card-theme">COMPLEXES</span>
+        <div class="speak-card-q">A patient repeatedly sabotages their professional relationships in the same way. How would you conceptualise this through the lens of complexes — and what does the repetition tell you?</div>
+        <div class="speak-card-prompts"><span>autonomous nature of complexes</span><span>work through</span><span>nuclear image</span><span>in my clinical experience...</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 11</span>
+        <span class="speak-card-theme">JUNGIAN VS. FREUDIAN</span>
+        <div class="speak-card-q">How would you describe the most fundamental theoretical differences between Freudian and Jungian psychoanalysis to a colleague trained in a different tradition?</div>
+        <div class="speak-card-prompts"><span>plumb the depths of</span><span>libidinal theory</span><span>teleological vs. causal</span><span>there is a case to be made for...</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 12</span>
+        <span class="speak-card-theme">THE ANALYST'S PSYCHE</span>
+        <div class="speak-card-q">Jung argued that the analyst's own psychology is always active in the session. How do you manage your own material — and what happens when your shadow is activated by a patient?</div>
+        <div class="speak-card-prompts"><span>countertransference</span><span>confront the shadow</span><span>tolerate ambiguity</span><span>the implications of this are profound</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 13</span>
+        <span class="speak-card-theme">AI AND THE PSYCHE</span>
+        <div class="speak-card-q">AI systems are increasingly being developed for therapeutic support. What does Jungian psychology suggest about the limits of what a machine can offer — and what only a human analyst can provide?</div>
+        <div class="speak-card-prompts"><span>relational depth</span><span>I would take issue with the notion that...</span><span>what is at stake here is nothing less than...</span><span>to push this further...</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 14</span>
+        <span class="speak-card-theme">NUMINOSITY</span>
+        <div class="speak-card-q">Jung used the term "numinous" to describe experiences of overwhelming, awe-inspiring power — encounters with the Self or the sacred. Have you witnessed numinous moments in clinical work? What do you do with them?</div>
+        <div class="speak-card-prompts"><span>numinous experience</span><span>religious or spiritual dimension</span><span>one cannot overstate the significance of...</span><span>what strikes me here is...</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 15</span>
+        <span class="speak-card-theme">CULTURAL SHADOW</span>
+        <div class="speak-card-q">Jung extended the shadow concept to collective and cultural levels. How do you see the cultural shadow operating in contemporary society — in politics, in social media, in collective denial?</div>
+        <div class="speak-card-prompts"><span>collective projection</span><span>political rage</span><span>the collective shadow</span><span>it could be argued that...</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 16</span>
+        <span class="speak-card-theme">THE TRANSCENDENT FUNCTION</span>
+        <div class="speak-card-q">How do you help a patient who is stuck between two irreconcilable positions — for example, the need to leave a relationship and the terror of being alone — access the transcendent function?</div>
+        <div class="speak-card-prompts"><span>tension of opposites</span><span>hold the analytic space</span><span>transcendent function</span><span>this raises the question of whether...</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 17</span>
+        <span class="speak-card-theme">SYMBOLS AND MEANING</span>
+        <div class="speak-card-q">Jung distinguished between signs (fixed meanings) and symbols (living, ambiguous carriers of meaning). How does this distinction shape how you listen to a patient's language and imagery?</div>
+        <div class="speak-card-prompts"><span>symbolic attitude</span><span>amplification</span><span>the distinction worth drawing is...</span><span>phenomenological approach</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 18</span>
+        <span class="speak-card-theme">ETHICS OF ANALYSIS</span>
+        <div class="speak-card-q">The analytic relationship is inherently asymmetrical and potentially powerful. What ethical obligations does this asymmetry place on the analyst — particularly in relation to transference?</div>
+        <div class="speak-card-prompts"><span>attend to the transference</span><span>relational ethics</span><span>the implications of this are profound</span><span>one might contend that...</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 19</span>
+        <span class="speak-card-theme">NEUROSCIENCE & JUNG</span>
+        <div class="speak-card-q">A 2025 study proposed that archetypal patterns may correspond to fundamental brain resonance structures. Does this neuroscientific framing strengthen or undermine the clinical value of Jungian concepts?</div>
+        <div class="speak-card-prompts"><span>empirical substrate</span><span>it could be argued that...</span><span>the chasm between</span><span>what this suggests is that...</span></div>
+      </div>
+
+      <div class="speak-card">
+        <span class="speak-card-num">CARD 20</span>
+        <span class="speak-card-theme">YOUR OWN ANALYSIS</span>
+        <div class="speak-card-q">Jung believed that no analyst can take a patient further than they themselves have gone. How has your own analysis — or your inner work — shaped the kind of analyst you have become?</div>
+        <div class="speak-card-prompts"><span>in my clinical experience...</span><span>shadow integration</span><span>individuation</span><span>what is at stake here is nothing less than...</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    🧠 ★ ★ &nbsp; JUNGIAN PSYCHOLOGY & THE ANALYTICAL TRADITION · C1 PROFESSIONAL ENGLISH &nbsp; ★ ★ 🧠
+  </footer>
+</div>
+
+<script>
+  // TABS
+  document.querySelectorAll('.tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // MATCHING
+  let selectedWord = null, matched5 = 0;
+  document.querySelectorAll('#t5 .match-item').forEach(item => {
+    item.addEventListener('click', () => {
+      if (item.classList.contains('matched')) return;
+      if (item.dataset.word) {
+        document.querySelectorAll('#t5 [data-word]').forEach(w => w.classList.remove('selected'));
+        item.classList.add('selected'); selectedWord = item;
+      } else if (item.dataset.def && selectedWord) {
+        if (selectedWord.dataset.word === item.dataset.def) {
+          selectedWord.classList.remove('selected'); selectedWord.classList.add('matched');
+          item.classList.add('matched'); matched5++;
+          document.getElementById('score5').textContent = matched5 === 10 ? '★ 10 / 10 ★' : matched5 + ' / 10';
+          selectedWord = null;
+        } else { item.classList.add('wrong'); setTimeout(() => item.classList.remove('wrong'), 500); }
+      }
+    });
+  });
+
+  // FILL
+  function checkFill() {
+    let correct = 0;
+    document.querySelectorAll('#t6 .fill-input').forEach(input => {
+      const ans = input.dataset.answer.toLowerCase().trim();
+      const val = input.value.toLowerCase().trim();
+      input.classList.remove('correct','wrong');
+      if (val === ans) { input.classList.add('correct'); correct++; }
+      else if (val) input.classList.add('wrong');
+    });
+    document.getElementById('score6').textContent = correct === 10 ? '★ 10 / 10 ★' : correct + ' / 10';
+  }
+
+  // MC
+  let mcScore = 0;
+  document.querySelectorAll('#t7 .mc-item').forEach(item => {
+    const correct = item.dataset.correct;
+    item.querySelectorAll('.mc-opt').forEach((opt, i) => {
+      opt.addEventListener('click', () => {
+        if (opt.disabled) return;
+        item.querySelectorAll('.mc-opt').forEach(o => o.disabled = true);
+        const letter = ['a','b','c','d'][i];
+        if (letter === correct) { opt.classList.add('correct'); mcScore++; }
+        else { opt.classList.add('wrong'); item.querySelectorAll('.mc-opt').forEach((o,j) => { if (['a','b','c','d'][j]===correct) o.classList.add('correct'); }); }
+        document.getElementById('score7').textContent = mcScore === 8 ? '★ 8 / 8 ★' : mcScore + ' / 8';
+      });
+    });
+  });
+</script>
+</body>
+</html>
